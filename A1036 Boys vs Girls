@@ -1,0 +1,51 @@
+#include<cstdio>
+#include<cstring>
+#include<iostream>
+struct student{
+	char name[20];
+	char id[20];
+	char gender;
+	int grade;
+}Female,Male,Temp;
+using namespace std;
+int main()
+{
+	int n;
+	Female.grade = -1;
+	Male.grade = 101;
+	scanf("%d",&n);
+	while(n--){
+		scanf("%s %c %s %d",Temp.name,&Temp.gender,Temp.id,&Temp.grade);
+		if(Temp.gender == 'F'){
+			if(Temp.grade >= Female.grade){
+				Female = Temp;
+			}
+		}
+		else{
+			if(Temp.grade <= Male.grade){
+				Male = Temp;
+			}
+		}
+	}
+	if(Female.grade == -1 || Male.grade == 101){
+		if(Female.grade == -1){
+			printf("Absent\n");
+		}
+		else{
+			printf("%s %s\n",Female.name,Female.id);
+		}
+		if(Male.grade == 101){
+			printf("Absent\n");
+		}
+		else{
+			printf("%s %s\n",Male.name,Male.id);
+		}
+		printf("NA\n");
+	}
+	else{
+		printf("%s %s\n",Female.name,Female.id);
+		printf("%s %s\n",Male.name,Male.id);
+		printf("%d",Female.grade - Male.grade);
+	}
+	return 0;
+}
