@@ -1,0 +1,51 @@
+#include<cstdio>
+#include<cstring>
+using namespace std;
+int asic[150] = {0};
+int main()
+{
+	char s1[85];
+	char s2[85];
+	gets(s1);
+	gets(s2);
+	int len1 = strlen(s1);
+	int len2 = strlen(s2);
+	for(int i = 0;i < len2;i++){
+		if(s2[i] >= '0' && s2[i] <= '9')
+			asic[s2[i]]++;
+		else if(s2[i] >= 'a' && s2[i] <= 'z'){
+			asic[s2[i]]++;
+			asic[s2[i] - 32]++;
+		}	
+		else if(s2[i] >= 'A' && s2[i] <= 'Z'){
+			asic[s2[i]]++;
+			asic[s2[i] + 32]++;
+		}
+		else{
+			asic[s2[i]]++;	
+		}	
+	}
+	for(int i = 0;i < len1;i++){
+		if(asic[s1[i]] == 0){
+			if(s1[i] >= '0' && s1[i] <= '9'){
+				printf("%c",s1[i]);
+				asic[s1[i]]++;	
+			}
+			else if(s1[i] >= 'a' && s1[i] <= 'z'){
+				printf("%c",s1[i] - 32);
+				asic[s1[i]]++;
+				asic[s1[i] - 32]++;
+			}	
+			else if(s1[i] >= 'A' && s1[i] <= 'Z'){
+				printf("%c",s1[i]);
+				asic[s1[i]]++;
+				asic[s1[i] + 32]++;
+			}
+			else{
+				printf("%c",s1[i]);
+				asic[s1[i]]++;	
+			}
+		}
+	}
+	return 0;;
+}
