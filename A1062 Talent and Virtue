@@ -1,0 +1,70 @@
+#include<stdio.h>
+#include<algorithm>
+#include<string.h>
+#include<math.h>
+using namespace std;
+struct people{
+	char id[10];
+	int cha;//sage 1, nobleman 2, fool man 3, small man 4
+	int virtue;
+	int talent;
+	int grade;
+}People[1000000];
+bool cmp(people a,people b)
+{
+	if(a.grade != b.grade)
+		return a.grade > b.grade;
+	else if(a.virtue != b.virtue)
+		return a.virtue > b.virtue;
+	else return strcmp(a.id,b.id) < 0;
+}
+int main()
+{
+	int n,l,h;
+	int num = 0;
+	scanf("%d %d %d",&n,&l,&h);
+	for(int i = 0;i < n;i++){
+		scanf("%s %d %d",&People[i].id,&People[i].virtue,&People[i].talent);
+		People[i].grade = People[i].talent + People[i].virtue;
+		if(People[i].talent >= h && People[i].virtue >= h){
+			People[i].cha = 1;
+			num++;
+		}
+		else if(People[i].talent < h && People[i].virtue >= h && People[i].talent >= l)
+		{
+			People[i].cha = 2;
+			num++;
+		}
+		else if(People[i].virtue >= People[i].talent && People[i].talent >= l && People[i].virtue >= l){
+			People[i].cha = 3;
+			num++;
+		}
+		else if(People[i].talent >= l && People[i].virtue >= l){
+			People[i].cha = 4;
+			num++;
+		}
+	}
+	sort(People,People + n,cmp);
+	printf("%d\n",num);
+	for(int i = 0;i < n;i++){
+		if(People[i].cha == 1){
+			printf("%s %d %d\n",People[i].id,People[i].virtue,People[i].talent);
+		}
+	}
+	for(int i = 0;i < n;i++){
+		if(People[i].cha == 2){
+			printf("%s %d %d\n",People[i].id,People[i].virtue,People[i].talent);
+		}
+	}
+	for(int i = 0;i < n;i++){
+		if(People[i].cha == 3){
+			printf("%s %d %d\n",People[i].id,People[i].virtue,People[i].talent);
+		}
+	}
+	for(int i = 0;i < n;i++){
+		if(People[i].cha == 4){
+			printf("%s %d %d\n",People[i].id,People[i].virtue,People[i].talent);
+		}
+	}
+	return 0;
+}
