@@ -1,0 +1,37 @@
+#include<cstdio>
+#include<cstdlib>
+#include<algorithm>
+using namespace std;
+int coin[100010] = {0};
+void twoPointers(int n,int m)
+{
+    int i = 0, j = n - 1;
+    while(i < j)
+    {
+        if(coin[i] + coin[j] == m)
+            break;
+        else if(coin[i] + coin[j] < m)
+            i++;
+        else
+            j--;
+    }
+    if(i < j)
+        printf("%d %d\n", coin[i], coin[j]);
+    else
+    {
+        printf("No Solution\n");
+    }
+}
+int main()
+{
+    int n, m;
+    scanf("%d %d", &n, &m);
+    for (int i = 0; i < n;i++)
+    {
+        scanf("%d", &coin[i]);
+    }
+    sort(coin, coin + n);
+    twoPointers(n, m);
+    system("pause");
+    return 0;
+}
