@@ -1,0 +1,38 @@
+#include<cstdio>
+#include<iostream>
+#define A 10
+#define B 11
+#define C 12
+using namespace std;
+int main()
+{
+	int a,b,c;
+	char num[10] = {0};
+	scanf("%d %d %d",&a,&b,&c);
+	int rear = 5;
+	do{
+		num[rear--] = c % 13;
+		c = c / 13;
+	}while(c);
+	rear = 3;
+	do{
+		num[rear--] = b % 13;
+		b = b / 13;
+	}while(b);
+	rear = 1;
+	do{
+		num[rear--] = a % 13;
+		a = a / 13;
+	}while(a);
+	printf("#");
+	for(int i = 0;i <= 5;++i){
+		if(num[i] == 10)
+			printf("A");
+		else if(num[i] == 11)
+			printf("B");
+		else if(num[i] == 12)
+			printf("C");
+		else
+			printf("%d",num[i]);
+	}
+}
