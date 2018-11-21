@@ -1,0 +1,113 @@
+#include<string.h>
+#include<stdio.h>
+#include<algorithm>
+using namespace std;
+struct Student{
+	int M;
+	int Mlevel;
+	int C;
+	int Clevel;
+	int A;
+	int Alevel;
+	int E;
+	int Elevel;
+	char id[10];
+}stu[2010];
+struct Score{
+	int Cle;
+	int Mle;
+	int Ele;
+	int Ale;
+}sco;
+int cmpC(Student a,Student b)
+{
+	return a.C > b.C;
+}
+int cmpM(Student a,Student b)
+{
+	return a.M > b.M;
+}
+int cmpE(Student a,Student b)
+{
+	return a.E > b.E;
+}
+int cmpA(Student a,Student b)
+{
+	return a.A > b.A;
+}
+int main()
+{
+	int n,m;
+	char id1[10];
+	scanf("%d %d",&n,&m);
+	for(int i = 0;i < n;i++){
+		scanf("%s %d %d %d",&stu[i].id,&stu[i].C,&stu[i].M,&stu[i].E);
+		stu[i].A = (stu[i].C + stu[i].M + stu[i].E) / 3;
+	}
+	sort(stu,stu + n,cmpC);
+	stu[0].Clevel = 1;
+	for(int i = 1;i < n; ++i){
+		if(stu[i].C != stu[i - 1].C)
+			stu[i].Clevel = i + 1;
+		else
+			stu[i].Clevel = stu[i - 1].Clevel;
+	}
+	
+	sort(stu,stu + n,cmpA);
+	stu[0].Alevel = 1;
+	for(int i = 1;i < n; ++i){
+		if(stu[i].A != stu[i - 1].A)
+			stu[i].Alevel = i + 1;
+		else
+			stu[i].Alevel = stu[i - 1].Alevel;
+	}
+	
+	sort(stu,stu + n,cmpM);
+	stu[0].Mlevel = 1;
+	for(int i = 1;i < n; ++i){
+		if(stu[i].M != stu[i - 1].M)
+			stu[i].Mlevel = i + 1;
+		else
+			stu[i].Mlevel = stu[i - 1].Mlevel;
+	}
+	
+	sort(stu,stu + n,cmpE);
+	stu[0].Elevel = 1;
+	for(int i = 1;i < n; ++i){
+		if(stu[i].E != stu[i - 1].E)
+			stu[i].Elevel = i + 1;
+		else
+			stu[i].Elevel = stu[i - 1].Elevel;
+	}
+	for(int i = 0;i < m; ++i){
+		int flag = 0,k;
+		scanf("%s",id1);
+		for(int j = 0;j < n; ++j){
+			if(strcmp(stu[j].id,id1) == 0){
+				k = j;
+				flag = 1;
+				break;
+			}
+		}
+		if(flag != 0){
+			int minle = stu[k].Elevel;
+			char minid = 'E';
+			if(stu[k].Mlevel <= minle){
+				minle = stu[k].Mlevel;
+				minid = 'M';
+			}
+			if(stu[k].Clevel <= minle){
+				minle = stu[k].Clevel;
+				minid = 'C';
+			}
+			if(stu[k].Alevel <= minle){
+				minle = stu[k].Alevel;
+				minid = 'A';
+			}
+			printf("%d %c\n",minle,minid);
+		}
+		else
+			printf("N/A\n");
+	}
+	return 0;
+}
