@@ -1,0 +1,106 @@
+#include<cstdio>
+#include<algorithm>
+#include<cstdlib>
+using namespace std;
+int n;
+int original[110],target[110],temp[110];
+
+bool isSame(int A[],int B[])
+{
+    for (int i = 0; i < n;i++)
+    {
+        if(A[i] != B[i])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+void showArray(int A[])
+{
+    for (int i = 0; i < n;i++)
+    {
+        printf("%d", A[i]);
+        if(i < n - 1)
+        {
+            printf(" ");
+        }
+    }
+    printf("\n");
+}
+
+int insertSort(int n)
+{
+    int flag = 0;
+    for (int i = 1; i < n;i++)
+    {
+        if (i != 1 && isSame(temp, target))
+        {
+            flag = 1;
+        }
+        int tem = temp[i], j = i;
+        while(j > 0 && temp[j - 1] > tem)
+        {
+            temp[j] = temp[j - 1];
+            j--;
+        }
+        temp[j] = tem;
+        if(flag == 1)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void mergeSort()
+{
+    bool flag = false;
+    for (int step = 2; step / 2 <= n;step *= 2)
+    {
+        if(step != 2 && isSame(temp,target))
+        {
+            flag = true;
+        }
+        for (int i = 0; i < n;i += step)
+        {
+            sort(temp + i, temp + min(i + step, n));
+        }
+        if(flag == true)
+        {
+            showArray(temp);
+            return;
+        }
+    }
+}
+
+int main()
+{
+    scanf("%d", &n);
+    for (int i = 0; i < n;i++)
+    {
+        scanf("%d", &original[i]);
+        temp[i] = original[i];
+    }
+    for (int i = 0; i < n;i++)
+    {
+        scanf("%d", &target[i]);
+    }
+    if(insertSort(n))
+    {
+        printf("Insertion Sort\n");
+        showArray(temp);
+    }
+    else
+    {
+        printf("Merge Sort\n");
+        for (int i = 0;i < n;i++)
+        {
+            temp[i] = original[i];
+        }
+        mergeSort();
+    }
+    system("pause");
+    return 0;
+}
