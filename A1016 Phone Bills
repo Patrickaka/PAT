@@ -1,0 +1,78 @@
+#include<cstdio>
+#include<cstring>
+#include<algorithm>
+using namespace std;
+const int maxn = 1010;
+struct Record{
+	char name[25];
+	int mmm;
+	int dd;
+	int time;
+	int amount;
+	char status[10];
+}all[maxn],valid[maxn];
+bool cmp(Record a,Record b)
+{
+	if(strcmp(a.name,b.name) != 0)
+		return strcmp(a.name,b.name) < 0;
+	else if(a.dd != b.dd)
+		return a.dd < b.dd;
+	else
+		return a.time < b.time;	
+} 
+int timeToInt(int dd,int hh,int mm)
+{
+	return dd * 24 * 60 + hh * 60 + mm;
+}
+int price[24] = {0};
+int main()
+{
+	for(int i = 0;i < 24;++i)
+		scanf("%d",&price[i]);
+	int n,hh,mm,tag = 0,now;
+	scanf("%d",&n);
+	for(int i = 0;i < n;++i){
+		scanf("%s %d:%d:%d:%d %s",all[i].name,&all[i].mmm,&all[i].dd,&hh,&mm,all[i].status);
+		all[i].time = timeToInt(all[i].dd,hh,mm);
+	}
+	sort(all,all + n,cmp);
+	int num = 0;
+	char aa[maxn] = "";
+	for(int i = 0;i < n - 1;++i){
+		if(!strcmp(all[i].name,all[i + 1].name) && !strcmp(all[i].status,"on-line") 
+		&& !strcmp(all[i + 1].status,"off-line")){
+			int amount = 0;
+			int day = all[i].time / 1440;
+			int hour = all[i].time % 1440 / 60;
+			int minute = all[i].time % 60;
+			while(1440 * day + 60 * hour + minute < all[i + 1].time){
+				amount += price[hour];
+				minute++;
+				if(minute >= 60){
+					minute = 0;
+					hour++;
+				}
+				if(hour >= 24){
+					hour = 0;
+					day++;
+				}
+			}
+			if(strcmp(all[i].name,aa)){
+				if(tag != 0)
+					printf("Total amount: $%.2f\n",all[now].amount / 100.0);
+				now = i;
+				printf("%s %02d\n",all[now].name,all[now].mmm);
+				strcpy(aa,all[i].name);
+			}
+			printf("%02d:%02d:%02d ",all[i].dd,all[i].time % (24 * 60) / 60,all[i].time % 60);
+			printf("%02d:%02d:%02d ",all[i + 1].dd,all[i + 1].time % (24 * 60)/ 60,all[i + 1].time % 60);
+			printf("%d ",all[i + 1].time - all[i].time);
+			printf("$%.2f\n",amount / 100.0);
+			all[now].amount += amount;				
+			tag = 1;			
+		}	
+	}
+	printf("Total amount: $%.2f\n",all[now].amount / 100.0);
+	return 0;
+	
+}
