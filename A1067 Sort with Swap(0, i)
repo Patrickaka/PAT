@@ -1,0 +1,57 @@
+#include <algorithm>
+#include <cstdio>
+#include <cstdlib>
+using namespace std;
+int permutation[100010] = {0};
+int position[100010] = {0};
+void swap(int &a, int &b)
+{
+    int temp;
+    temp = a;
+    a = b;
+    b = temp;
+}
+int main()
+{
+    int n, flag, num = 0,k = 0;
+    scanf("%d", &n);
+    for (int i = 0; i < n; ++i)
+    {
+        scanf("%d", &permutation[i]);
+        position[permutation[i]] = i;
+        if (permutation[i] == 0)
+            flag = i;
+    }
+    while(1)
+    {
+        if (flag != 0)
+        {
+            swap(permutation[flag], permutation[position[flag]]);
+            flag = position[flag];
+            num++;
+        }
+        else
+        {
+            int temp = 0;
+            for (int i = k; i < n; i++)
+            {
+                if (permutation[i] != i)
+                {
+                    position[permutation[i]] = flag;
+                    swap(permutation[flag], permutation[i]);
+                    num++;
+                    temp++;
+                    k = i;
+                    flag = i;
+                    break;
+                }
+            }
+            if(temp == 0)
+                break;
+        }
+    }
+    printf("%d\n", num);
+
+    system("pause");
+    return 0;
+}
