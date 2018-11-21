@@ -1,0 +1,28 @@
+#include<cstdio>
+#include<iostream>
+using namespace std;
+int main()
+{
+	int n = 0;
+	int front,rear;
+	int n1,n2;
+	int i,j;
+	char ch[100];
+	scanf("%s",ch);
+	for(i = 0; ch[i] != '\0';++i){
+        n++;
+	}
+	n1 = (n + 2)/3;
+	n2 = (n + 2) - 2 * n1;
+	rear = i - 1;
+	for(i = 0,j = rear;i < n1 - 1;i++,j--){
+		printf("%c",ch[i]);
+		for(int k = 0;k < n2 - 2;k++){
+			printf(" ");
+		}
+		printf("%c\n",ch[j]);
+	}
+	for(;i < n + 1 - n1;i++){
+		printf("%c",ch[i]);
+	}
+}
