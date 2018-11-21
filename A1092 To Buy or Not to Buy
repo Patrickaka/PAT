@@ -1,0 +1,26 @@
+#include<cstdio>
+#include<cstring>
+using namespace std;
+int hash[300] = {0};
+int main()
+{
+	char owner[1010],eva[1010];
+	scanf("%s %s",owner,eva);
+	int len1 = strlen(owner);
+	int len2 = strlen(eva);
+	int temp = 0;
+	for(int i = 0;i < len1;++i){
+		hash[owner[i]]++;
+	}
+	for(int i = 0;i < len2;++i){
+		if(hash[eva[i]] > 0){
+			hash[eva[i]]--;
+			temp++;
+		}
+	}
+	if(temp == len2)
+		printf("Yes %d",len1 - len2);
+	else
+		printf("No %d",len2 - temp);
+	return 0;
+}
