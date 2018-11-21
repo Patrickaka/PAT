@@ -1,0 +1,38 @@
+#include<cstdio>
+#include<map>
+using namespace std;
+int main()
+{
+    int m, n;
+    map<int,int> mp;
+    scanf("%d %d", &m, &n);
+    for (int i = 0; i < m;i++)
+    {
+        for (int j = 0; j < n;j++)
+        {
+            int num;
+            scanf("%d", &num);
+            if(mp.find(num) != mp.end())
+            {
+                mp[num]++;
+            }
+            
+            else
+            {
+                mp[num] = 1;
+            }        
+        }
+    }
+    int k, MAX = 0;
+    for (map<int, int>::iterator it = mp.begin(); it != mp.end();it++ )
+    {
+        
+        if(it ->second > MAX)
+        {
+            k = it->first;
+            MAX = it->second;
+        }
+    }
+    printf("%d", k);
+    return 0;
+}
